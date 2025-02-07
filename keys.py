@@ -19,7 +19,7 @@ def generate_keypair(filepath,userpassphrase):
 
 def gensymkey():
     # k(\kappa) = 2048, the key size will be 256 bytes
-    return os.urandom(256)
+    return os.urandom(32)
 
 def load_privkey(filepath, passphrase):
     with open(filepath + '/private_key.pem', 'rb') as f:
