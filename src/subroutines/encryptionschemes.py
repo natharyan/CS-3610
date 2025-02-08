@@ -22,7 +22,7 @@ def openssldecrypt(privkeyfile, encrypted_file, passphrase):
     else:
         raise Exception("Decryption failed")
 
-# encrypt symmetric key
+# encrypt the symmetric key
 def opensslencrypt_symkey(symkey, public_key_file, dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
@@ -42,7 +42,7 @@ def openssldecrypt_symkey(privkeyfile, encrypted_file, passphrase):
     else:
         raise Exception("Decryption failed") 
 
-# symmetric key encryption/decryption
+# encryption/decryption using the symmetric key
 def opensslSymmetric(message, symkey,encrypt=True):
     if encrypt:
         if isinstance(message, bytes):

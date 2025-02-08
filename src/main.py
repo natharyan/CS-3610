@@ -4,6 +4,7 @@ from OpenSSL import crypto, SSL
 import socket
 import threading
 import time
+import os
 
 import subroutines.certificate # user defined module
 import subroutines.encryptionschemes # user defined module
@@ -156,19 +157,86 @@ if __name__ == '__main__':
     # Mallory encrypts the symmetric key using Alice's public key and sends it to Alice's port
     subroutines.encryptionschemes.opensslencrypt_symkey(symkeyM, keystore + '/' + subdirA + '/public_key.pem', datadir + '/' + subdirM)
     # start a thread to receive the encrypted symmetric key
-    encrypted_symkey_result_A = []
-    receive_thread_A = threading.Thread(target=receive_message_thread, args=('localhost', PORT_A, encrypted_symkey_result_A))
-    receive_thread_A.start()
+    encrypted_symkey_result = []
+    receive_thread = threading.Thread(target=receive_message_thread, args=('localhost', PORT_A, encrypted_symkey_result))
+    receive_thread.start()
     time.sleep(1)
     # send the encrypted symmetric key to Alice
     send_message(datadir + '/' + subdirM + '/encrypted.bin', 'localhost', PORT_A)
     # wait for the thread to finish and get the result
-    receive_thread_A.join()
-    encrypted_symkey_path_A = encrypted_symkey_result_A[0]
+    receive_thread.join()
+    encrypted_symkeypath = encrypted_symkey_result[0]
     # Alice decrypts the symmetric key using their private key
-    symkeyA = subroutines.encryptionschemes.openssldecrypt_symkey(keystore + '/' + subdirA + '/private_key.pem', encrypted_symkey_path, passphrase) # Alice decrypts the message and gets the same symmetric key
+    symkeyA = subroutines.encryptionschemes.openssldecrypt_symkey(keystore + '/' + subdirA + '/private_key.pem', encrypted_symkeypath, passphrase) # Alice decrypts the message and gets the same symmetric key
     if(symkeyM == symkeyA):
         print("Symmetric key exchange between Mallory and Alice successful")
-
     if(symkeyB == symkeyM and symkeyM == symkeyA):
         print("Mallory successfully intercepted the symmetric key exchange between Bob and Alice")
+    print("Now Bob and Alice initiate communication using the symmetric key, and Mallory can read and modify the messages using the symmetric key")
+    # Bob sends a message to Mallory's port encrypted using the symmetric key
+    messageB = "Good morning, Alice"
+    messageM = "Throw bomb"
+    print("/----- Bob and Alice initiate communication with the symmetric key -----/")
+    # Bob sends a message to Mallory thinking it is Alice
+    # start a thread to receive the encrypted message
+    encrypted_message_result = []
+    receive_thread = threading.Thread(target=receive_message_thread, args=('localhost', PORT_M, encrypted_message_result))
+    receive_thread.start()
+    time.sleep(1)
+    # Bob encrypts a message using the symmetric key and sends it to Mallory
+    encryptedBM = subroutines.encryptionschemes.opensslSymmetric(messageB, symkeyB, encrypt=True)
+    # send the encrypted message to Mallory
+    send_message(encryptedBM, 'localhost', PORT_M)
+    # wait for the thread to finish and get the result
+    receive_thread.join()
+    encrypted_message = encrypted_message_result[0]
+    # user A decrypts the message using the symmetric key
+    decryptedBM = subroutines.encryptionschemes.opensslSymmetric(encrypted_message, symkeyM, encrypt=False)
+    print(f"\n\nMalloy intercepted Bob's message: '{decryptedBM}'")
+    print(f"Mallory modifies the message to: '{messageM}', and sends it to Alice")
+    # Mallory sends the modified message to Alice
+    # start a thread to receive the encrypted message
+    encrypted_message_result = []
+    receive_thread = threading.Thread(target=receive_message_thread, args=('localhost', PORT_A, encrypted_message_result))
+    receive_thread.start()
+    time.sleep(1)
+    # Bob encrypts a message using the symmetric key and sends it to Mallory
+    encryptedMA = subroutines.encryptionschemes.opensslSymmetric(messageM, symkeyM, encrypt=True)
+    # send the encrypted message to Mallory
+    send_message(encryptedMA, 'localhost', PORT_A)
+    # wait for the thread to finish and get the result
+    receive_thread.join()
+    encrypted_message = encrypted_message_result[0]
+    # Alice decrypts the message using the symmetric key
+    decryptedBM = subroutines.encryptionschemes.opensslSymmetric(encrypted_message, symkeyA, encrypt=False)
+    print(f"Alice received the message: '{decryptedBM}'")
+
+# ---------------------------- #
+
+    # TASK 6: Implement the Needham-Schroeder protocol and demonstrate the Denning-Sacco attack
+    # ------------- Needham-Schroeder ---------------- #
+    print("/----- Needham-Schroeder protocol -----/")
+    # A -> S : A, B, Na
+    # S -> A : {Na, Kab, B, {Kab, A}Kbs}Kas
+    # A -> B : {Kab, A}Kbs
+    # B -> A : {Nb}Kab
+    # A -> B : {Nb-1}Kab
+
+    PORT_S = 65436
+    PORT_B = 65437
+
+    # Alice generates a random nonce Na
+    Na = os.urandom(16)
+    # start a thread to receive the message
+    message_result = []
+    receive_thread = threading.Thread(target=receive_message_thread, args=('localhost', PORT_S, message_result))
+    receive_thread.start()
+    time.sleep(1)
+    # Alice sends to the trusted server A,B,Na
+    send_message(f"A,B,{Na.hex()}", 'localhost', PORT_S)
+    # wait for the thread to finish and get the result
+    receive_thread.join()
+    message = message_result[0]
+    # the server retrieves the A,B,Na
+    A, B, Na = message.decode().split(',')
+    
