@@ -31,7 +31,7 @@ def genCertificateSelfSigned(passphrase, keystore, certificatesdir, commonname,e
     print("ca certificate dir: ", certificatesdir)
     with open(certificatesdir + '/selfsigned.crt', 'wt') as f:
         f.write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert).decode("utf-8"))
-    with open(keystore + '/private.key', 'wt') as f:
+    with open(keystore + '/private_key.pem', 'wt') as f:
         f.write(privkey.decode("utf-8"))
     with open(keystore + '/public_key.pem', 'wt') as f:
         f.write(pkey.decode("utf-8"))
@@ -101,6 +101,7 @@ def signPublicKey(user,publickeypath, cacertpath, cakeypath, capassphrase, certp
     if not os.path.exists(certpath):
         os.makedirs(certpath)
     with open(cakeypath, 'rb') as f:
+        capassphrase = getpass.getpass("Enter pass phrase for" + cakeypath + ':')
         ca_key = crypto.load_privatekey(crypto.FILETYPE_PEM, f.read(), passphrase=capassphrase.encode())
     with open(cacertpath, 'rb') as f:
         ca_cert = crypto.load_certificate(crypto.FILETYPE_PEM, f.read())
