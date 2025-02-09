@@ -13,7 +13,7 @@ def genCertificateSelfSigned(passphrase, keystore, certificatesdir, commonname,e
     privkey = crypto.dump_privatekey(crypto.FILETYPE_PEM, k, cipher="aes256", passphrase=passphrase.encode())
     pkey = crypto.dump_publickey(crypto.FILETYPE_PEM,k)
     validityStartinSeconds = 0
-    validityEndinSeconds = 10*365*24*60*60 # I got this timing from a stack overflow example, so keeping it the same in case it is a standard
+    validityEndinSeconds = 10*365*24*60*60 # I got this timing from a stack overflow example, so keeping it the same in case it is a
     cert = crypto.X509()
     cert.get_subject().C = country
     cert.get_subject().ST = stateorprovince
