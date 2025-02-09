@@ -153,7 +153,7 @@ def symmetric_key_exchange(userA, userB, symkey, keystore, datadir, passphraseA,
     send_message(datadir + '/' + subdirB_A + '/encrypted.bin', 'A',forwarding_table)
     # wait for the thread to finish and get the result
     receive_thread.join()
-    encrypted_symkey_path = datadir + '/' + subdirM + '/encrypted.bin'
+    encrypted_symkey_path = datadir + '/' + subdirB_A + '/encrypted.bin'
     print(f"Received the encrypted symmetric key at {encrypted_symkey_path}")
     # user A decrypts the symmetric key using their private key
     print(f"Decrypting the symmetric key using {userA}'s private key\n")
@@ -189,20 +189,25 @@ passphraseM = '4321'
 
 # TASK 1: generate 2048-bit RSA keypairs and encrypt/decrypt a message
 def task1():
+    print("\n\n/----- Task 1: Generate 2048-bit RSA keypairs and encrypt/decrypt a message -----/")
     global message
     keys.generate_keypair(keystore + '/' + subdirA, passphrase)
     message = "ATTACK AT DAWN"
     subroutines.encryptionschemes.opensslencrypt(message, keystore + '/' + subdirA + '/public_key.pem', datadir + '/' + subdirA)
-    decrypted_text = subroutines.encryptionschemes.openssldecrypt(keystore + '/' + subdirA + '/private_key.pem', datadir + '/' + subdirA + '/encrypted.bin', passphrase) 
+    with open(datadir + '/' + subdirA + '/encrypted.bin', 'rb') as f:
+        encrypted_message = f.read()
+    print("Encrypted message:", encrypted_message)
+    decrypted_text = subroutines.encryptionschemes.openssldecrypt(keystore + '/' + subdirA + '/private_key.pem', datadir + '/' + subdirA + '/encrypted.bin', passphrase)
+    print(f"Decrypted message: {decrypted_text}")
     if (message == decrypted_text):
         print("Decryption successful")
 
 # ---------------------------- #
 # TASK 2: Establish a secure symmetric key exchange using OpenSSL
 def task2():
+    print("\n\n/----- Task 2: Establish a secure symmetric key exchange using OpenSSL -----/")
     global symkeyAB
     global symkey
-    print("\n\n/----- Task 2: Establish a secure symmetric key exchange using OpenSSL -----/")
     # user B generates a symmetric key and encrypts it using user A's public key
     print("\nUser B generates a symmetric key")
     symkey = keys.gensymkey()
@@ -236,36 +241,39 @@ def task2():
 def task3():
     print("\n\n/----- Task 3: Create a self-signed Certificate Authority (CA) and use it to sign a public key -----/")
     # generate a self-signed certificate for the CA
-    print("Generating a self-signed certificate for the CA")
+    print("\nGenerating a self-signed certificate for the CA")
     subroutines.certificate.genCertificateSelfSigned(passphrase=passphraseCA, keystore=keystore + '/' + subdirCA, certificatesdir=certificatesdir + '/' + "CA", commonname="CA", emailaddress="ca@gmail.com", country="US", stateorprovince="CA", locality="San Francisco", organizationname="UC Berkeley", organizationunit="EECS", serialnumber=1111)
     # generate a certificate signing request (CSR) for user A
-    print("Generating a certificate signing request (CSR) for user A")
+    print("\nGenerating a certificate signing request (CSR) for user A")
     subroutines.certificate.genCertificateRequest(keystore=keystore + '/' + subdirA, csrpath=certificatesdir + '/' + subdirA, commonname="A", emailaddress="a@gmail.com", country="IN", stateorprovince="KA", locality="Bangalore", organizationname="IISc", organizationunit="CSA")
     # start a thread to receive the CSR
+    print("Starting a thread to receive the CSR from user A")
     csr_result = []
     receive_thread = threading.Thread(target=receive_message_thread, args=('CA', forwarding_table, csr_result))
     receive_thread.start()
     time.sleep(1)
     # send the CSR to the CA
-    send_message(certificatesdir + '/' + subdirA + '/csr.pem', 'CA',forwarding_table)
+    print("\nSending the CSR to the CA")
+    send_message(certificatesdir + '/' + subdirA + '/csr.pem', 'CA', forwarding_table)
     receive_thread.join()
     csr_path = csr_result[0]
     # sign the CSR using the CA's private key
-    print("Signing the CSR using the CA's private key")
+    print("\nSigning the CSR using the CA's private key")
     subroutines.certificate.signCertificateRequest(csrpath=csr_path, ca_cert_path=certificatesdir + '/' + subdirCA + '/' + "selfsigned.crt", ca_key_path=keystore + '/' + subdirCA + '/' + "private_key.pem", certpath=certificatesdir + '/' + subdirA, serialnumber=1234)
     # start a thread to receive the signed certificate
+    print("\nStarting a thread to receive the signed certificate from the CA")
     signed_cert_result = []
     receive_thread = threading.Thread(target=receive_message_thread, args=('A', forwarding_table, signed_cert_result))
     receive_thread.start()
     time.sleep(1)
     # send the signed certificate to user A
-    send_message(certificatesdir + '/' + subdirA + '/signed.crt', 'A',forwarding_table)
+    print("\nSending the signed certificate to user A")
+    send_message(certificatesdir + '/' + subdirA + '/signed.crt', 'A', forwarding_table)
     receive_thread.join()
     signed_cert_path = signed_cert_result[0]
     # verify the certificate using the CA's certificate
-    print("Verifying the certificate using the CA's certificate")
+    print("\nVerifying the signed certificate using the CA's certificate")
     subroutines.certificate.verifyCertificate(certpath=signed_cert_path, cacertpath=certificatesdir + '/' + subdirCA + '/' + "selfsigned.crt")
-    print("Certificate verification successful")
 
 # ---------------------------- #
 
@@ -279,29 +287,33 @@ def task4():
     receive_thread.start()
     time.sleep(1)
     # user A sends the CSR to the CA
+    print("\nGenerating a certificate signing request (CSR) for user A")
     subroutines.certificate.genCertificateRequest(keystore=keystore + '/' + subdirA, csrpath=datadir + '/' + subdirA, commonname="A", emailaddress="a@gmail.com", country="IN", stateorprovince="KA", locality="Bangalore", organizationname="IISc", organizationunit="CSA")
+    print("\nSending the CSR to the CA")
     send_message(datadir + '/' + subdirA + '/csr.pem', 'CA',forwarding_table)
     receive_thread.join()
     csr_path = csr_result[0]
     # CA signs the public key and returns the certificate
+    print("\nCA signs the public key and returns the certificate")
     subroutines.certificate.signCertificateRequest(csrpath=csr_path, ca_cert_path=certificatesdir + '/' + subdirCA + '/' + "selfsigned.crt", ca_key_path=keystore + '/' + subdirCA + '/' + "private_key.pem", certpath=certificatesdir + '/' + subdirA, serialnumber=1235)
     signed_cert_result = []
     receive_thread = threading.Thread(target=receive_message_thread, args=('A',forwarding_table, signed_cert_result))
     receive_thread.start()
     time.sleep(1)
     # CA sends the signed certificate to user A
+    print("\nSending the signed certificate to user A")
     send_message(certificatesdir + '/' + subdirA + '/signed.crt', 'A',forwarding_table)
     receive_thread.join()
     signed_cert_path = signed_cert_result[0]
     # validate the signed certificate using OpenSSL
-    print("Validating the signed certificate using OpenSSL")
+    print("\nValidating the signed certificate using OpenSSL")
     subroutines.certificate.verifyCertificate(certpath=signed_cert_path, cacertpath=certificatesdir + '/' + subdirCA + '/' + "selfsigned.crt")
-    print("Certificate validation successful")
 
 # ---------------------------- #
 
 # TASK 5: Implement a MITM attack on a key exchange protocol
 def task5():
+    print("\n\n/----- Task 5: Implement a MITM")
     global symkeyB
     global symkeyM
     global symkeyA
