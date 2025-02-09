@@ -15,6 +15,7 @@ PORT_B = 65433
 PORT_CA = 65434
 PORT_S = 65436
 PORT_M = 65435
+PORT_P = 65437
 
 class ForwardingTable:
     def __init__(self):
@@ -23,7 +24,8 @@ class ForwardingTable:
             'B': {'port': PORT_B, 'server': None},
             'CA': {'port': PORT_CA, 'server': None},
             'S': {'port': PORT_S, 'server': None},
-            'M': {'port': PORT_M, 'server': None}
+            'M': {'port': PORT_M, 'server': None},
+            'P': {'port': PORT_P, 'server': None}
         }
         self.hijacked_routes = {}
         self._initialize_servers()
@@ -180,7 +182,9 @@ datadir = '../data'
 certificatesdir = '../certificates'
 subdirA = 'A' # user A
 subdirCA = 'CA'
+subdirB = 'B'
 passphrase = "1234" # take as user input when retrieving the private key (stored by the server)
+passphraseB = "1235"
 passphraseCA = "5678"
 passphraseM = '4321'
 
@@ -245,7 +249,7 @@ def task3():
     subroutines.certificate.genCertificateSelfSigned(passphrase=passphraseCA, keystore=keystore + '/' + subdirCA, certificatesdir=certificatesdir + '/' + "CA", commonname="CA", emailaddress="ca@gmail.com", country="US", stateorprovince="CA", locality="San Francisco", organizationname="UC Berkeley", organizationunit="EECS", serialnumber=1111)
     # generate a certificate signing request (CSR) for user A
     print("\nGenerating a certificate signing request (CSR) for user A")
-    subroutines.certificate.genCertificateRequest(keystore=keystore + '/' + subdirA, csrpath=certificatesdir + '/' + subdirA, commonname="A", emailaddress="a@gmail.com", country="IN", stateorprovince="KA", locality="Bangalore", organizationname="IISc", organizationunit="CSA")
+    subroutines.certificate.genCertificateRequest(keystore=keystore + '/' + subdirA, csrpath=certificatesdir + '/' + subdirA, commonname="A", emailaddress="b@gmail.com", country="IN", stateorprovince="KA", locality="Bangalore", organizationname="IISc", organizationunit="CSA")
     # start a thread to receive the CSR
     print("Starting a thread to receive the CSR from user A")
     csr_result = []
@@ -259,7 +263,7 @@ def task3():
     csr_path = csr_result[0]
     # sign the CSR using the CA's private key
     print("\nSigning the CSR using the CA's private key")
-    subroutines.certificate.signCertificateRequest(csrpath=csr_path, ca_cert_path=certificatesdir + '/' + subdirCA + '/' + "selfsigned.crt", ca_key_path=keystore + '/' + subdirCA + '/' + "private_key.pem", certpath=certificatesdir + '/' + subdirA, serialnumber=1234)
+    subroutines.certificate.signCertificateRequest(csrpath=csr_path, ca_cert_path=certificatesdir + '/' + subdirCA + '/' + "selfsigned.crt", ca_key_path=keystore + '/' + subdirCA + '/' + "private_key.pem", certpath=certificatesdir + '/' + subdirA, serialnumber=1240)
     # start a thread to receive the signed certificate
     print("\nStarting a thread to receive the signed certificate from the CA")
     signed_cert_result = []
@@ -432,7 +436,91 @@ def task5():
 
 # ---------------------------- #
 
-# TASK 6: Implement the Needham-Schroeder protocol and demonstrate the Denning-Sacco attack
+# TASK 6: Implement the Needham-Schroeder protocol and demonstrate the Denning-Sacco attack (slides)
+def task6slides():
+    global Kab
+    global subdirS
+    global passphraseS
+    
+    print('\n\n/----- Denning-Sacco protocol -----/')
+    # A -> S : A, B
+    # S -> A : C(A), C(B)
+    # A -> B : C(A), C(B), {{TA,Kab}Ka-1}Kb
+    subdirS = 'S'
+    passphraseS = '8765'
+    keys.generate_keypair(keystore + '/' + subdirS, passphraseS)
+    keys.generate_keypair(keystore + '/' + subdirA, passphrase)
+    keys.generate_keypair(keystore + '/' + subdirB, passphrase)
+    Kab = keys.gensymkey()
+    print("\nInitiating Denning-Sacco protocol...")
+    message_resultAS = []
+    receive_thread = threading.Thread(target=receive_message_thread, args=('S', forwarding_table, message_resultAS))
+    receive_thread.start()
+    time.sleep(1)
+    print("Alice -> Server: A,B")
+    send_message("A,B", 'S', forwarding_table)
+    receive_thread.join()
+    message_resultAS = message_resultAS[0]
+    message_result = []
+    receive_thread = threading.Thread(target=receive_message_thread, args=('A', forwarding_table, message_result))
+    receive_thread.start()
+    time.sleep(1)
+    print("Server -> Alice: C(A), C(B)")
+    A, B = message_resultAS.decode().split(',')
+    with open(certificatesdir + '/' + A.strip() + '/signed.crt', 'rb') as f:
+        CA = f.read()
+    with open(certificatesdir + '/' + B.strip() + '/signed.crt', 'rb') as f:
+        CB = f.read()
+        
+    send_message(f"{CA.hex()},{CB.hex()}", 'A', forwarding_table)
+    receive_thread.join()
+    TA = str(int(time.time()))
+    subroutines.encryptionschemes.opensslencrypt(f"{TA},{Kab.hex()}", keystore + '/' + subdirA + '/private_key.pem',datadir + '/' + subdirA)
+    with open(datadir + '/' + subdirA + '/encrypted.bin', 'rb') as f:
+        signed_data = f.read()
+    subroutines.encryptionschemes.opensslencrypt(signed_data.hex(),keystore + '/' + subdirB + '/public_key.pem',datadir + '/' + subdirA)
+    with open(datadir + '/' + subdirA + '/encrypted.bin', 'rb') as f:
+        final_message = f.read()
+    message_result = []
+    receive_thread = threading.Thread(target=receive_message_thread, args=('B', forwarding_table, message_result))
+    receive_thread.start()
+    time.sleep(1)
+    print("Alice -> Bob: C(A), C(B), {{TA,Kab}Ka-1}Kb")
+    send_message(f"{CA.hex()},{CB.hex()},{final_message.hex()}", 'B', forwarding_table)
+    receive_thread.join()
+    print("\nDenning-Sacco protocol completed")
+    # ------------- Denning-Sacco Attack ---------------- #
+    print("\n/----- Denning-Sacco Attack Demonstration -----/")
+    print("B wants to masquerade as A to P")
+    message_result = []
+    receive_thread = threading.Thread(target=receive_message_thread, args=('S', forwarding_table, message_result))
+    receive_thread.start()
+    time.sleep(1)
+    print("B -> Server: B,P")
+    send_message("B,P", 'S', forwarding_table)
+    receive_thread.join()
+    with open(certificatesdir + '/' + subdirB + '/signed.crt', 'rb') as f:  # Using B's cert as P for simulation
+        CP = f.read()
+    # B can reuse the captured {{TA,Kab}Ka-1} and re-encrypt it with P's public key
+    captured_data = final_message
+    subdirP = 'P'
+    passphraseP = '1236'
+    keys.generate_keypair(keystore + '/' + subdirP, passphraseP)
+    # B re-encrypts the captured data with P's public key
+    subroutines.encryptionschemes.opensslencrypt(captured_data.hex(),keystore + '/' + subdirP + '/public_key.pem',datadir + '/' + subdirP)
+    with open(datadir + '/' + subdirP + '/encrypted.bin', 'rb') as f:
+        reencrypted_data = f.read()
+    # B sends the forged message to P
+    message_result = []
+    receive_thread = threading.Thread(target=receive_message_thread, args=('P', forwarding_table, message_result))
+    receive_thread.start()
+    time.sleep(1)
+    print("B -> P: C(B), C(P), {{TA,Kab}Ka-1}Kp")
+    send_message(f"{CB.hex()},{CP.hex()},{reencrypted_data.hex()}", 'B', forwarding_table)
+    receive_thread.join()
+
+
+# TASK 6: Implement the Needham-Schroeder protocol and demonstrate the Denning-Sacco attack (this is based on the wikipedia page for the Needham-Schroeder protocol)
 def task6():
     global Kab
     global Kas
