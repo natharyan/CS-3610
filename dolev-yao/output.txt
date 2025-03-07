@@ -1,0 +1,1212 @@
+Initializing the Needham-Schroeder Symmetric Key protocol...
+
+Initializing knowledge for all agents...
+Adding knowledge to Alice's knowledge base: A
+Adding knowledge to Alice's knowledge base: B
+Adding knowledge to Alice's knowledge base: S
+Adding knowledge to Alice's knowledge base: K_AS
+Adding knowledge to Bob's knowledge base: A
+Adding knowledge to Bob's knowledge base: B
+Adding knowledge to Bob's knowledge base: S
+Adding knowledge to Bob's knowledge base: K_BS
+Adding knowledge to Server's knowledge base: A
+Adding knowledge to Server's knowledge base: B
+Adding knowledge to Server's knowledge base: S
+Adding knowledge to Server's knowledge base: K_AS
+Adding knowledge to Server's knowledge base: K_BS
+Adding knowledge to Attacker's knowledge base: A
+Adding knowledge to Attacker's knowledge base: B
+Adding knowledge to Attacker's knowledge base: S
+Adding knowledge to Attacker's knowledge base: I
+
+Knowledge bases:
+Alice's knowledge: {'B', 'A', 'S', 'K_AS'}
+Bob's knowledge: {'B', 'A', 'S', 'K_BS'}
+Server's knowledge: {'B', 'K_AS', 'S', 'A', 'K_BS'}
+Attacker's knowledge: {'I', 'B', 'A', 'S'}
+
+Simulating replay attack (Denning-Sacco attack)...
+Adding knowledge to Alice's knowledge base: Na
+Adding knowledge to Alice's knowledge base: pair(A,pair(B,Na))
+Adding knowledge to Attacker's knowledge base: pair(A,pair(B,Na))
+
+Attacker intercepts: pair(A,pair(B,Na))
+MESSAGE: Alice -> Server (intercepted by Attacker): A, B, Na
+
+Attacker starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'S', 'A', 'pair(A,pair(B,Na))', 'I'}
+Adding split terms: A pair(B,Na)
+
+Iteration 1: Current knowledge: {'B', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,Na)', 'I'}
+Adding split terms: B Na
+
+Iteration 2: Current knowledge: {'B', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,Na)', 'I', 'Na'}
+
+Iteration 3: Current knowledge: {'B', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,Na)', 'I', 'Na'}
+
+Iteration 4: Current knowledge: {'B', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,Na)', 'I', 'Na'}
+
+Iteration 5: Current knowledge: {'B', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,Na)', 'I', 'Na'}
+
+Iteration 6: Current knowledge: {'B', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,Na)', 'I', 'Na'}
+
+Iteration 7: Current knowledge: {'B', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,Na)', 'I', 'Na'}
+
+Final derived knowledge: {'B', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,Na)', 'I', 'Na'}
+Adding knowledge to Server's knowledge base: K_AB
+Adding knowledge to Server's knowledge base: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding knowledge to Alice's knowledge base: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Server sends to Alice: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+MESSAGE: Server -> Alice: {Na, K_AB, B, {K_AB, A}K_BS}K_AS
+
+Alice starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'Na', 'K_AS'}
+Adding pair term: pair(B,Na)
+Adding split terms: A pair(B,Na)
+Adding decrypted message: pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))
+
+Iteration 1: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'S', 'A', 'pair(A,pair(B,Na))'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding split terms: Na pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))
+
+Iteration 2: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding split terms: K_AB pair(B,enc(pair(K_AB,A),K_BS))
+
+Iteration 3: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding pair term: pair(K_AB,A)
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding split terms: B enc(pair(K_AB,A),K_BS)
+
+Iteration 4: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 5: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 6: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 7: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 8: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 9: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 10: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 11: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 12: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 13: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 14: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Iteration 15: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+
+Final derived knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'enc(pair(K_AB,A),K_BS)', 'pair(K_AB,A)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'pair(B,enc(pair(K_AB,A),K_BS))', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'Na', 'K_AB'}
+Adding knowledge to Alice's knowledge base: K_AB
+Adding knowledge to Alice's knowledge base: enc(pair(K_AB,A),K_BS)
+Adding knowledge to Attacker's knowledge base: enc(pair(K_AB,A),K_BS)
+
+Attacker intercepts ticket: enc(pair(K_AB,A),K_BS)
+MESSAGE: Alice -> Bob (intercepted by Attacker): {K_AB, A}K_BS
+Adding knowledge to Bob's knowledge base: enc(pair(K_AB,A),K_BS)
+
+Bob starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'S', 'A', 'enc(pair(K_AB,A),K_BS)', 'K_BS'}
+Adding decrypted message: pair(K_AB,A)
+
+Iteration 1: Current knowledge: {'B', 'S', 'A', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding split terms: K_AB A
+
+Iteration 2: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Iteration 3: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Iteration 4: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Iteration 5: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Iteration 6: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Iteration 7: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Final derived knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding knowledge to Bob's knowledge base: K_AB
+Adding knowledge to Bob's knowledge base: Nb
+Adding knowledge to Bob's knowledge base: enc(Nb,K_AB)
+Adding knowledge to Attacker's knowledge base: enc(Nb,K_AB)
+
+Attacker intercepts: enc(Nb,K_AB)
+MESSAGE: Bob -> Alice (intercepted by Attacker): {Nb}K_AB
+Adding knowledge to Alice's knowledge base: enc(Nb,K_AB)
+
+Alice starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB'}
+Adding pair term: pair(B,enc(pair(K_AB,A),K_BS))
+Adding pair term: pair(B,Na)
+Adding pair term: pair(K_AB,A)
+Adding split terms: A pair(B,Na)
+Adding decrypted message: pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))
+Adding decrypted message: Nb
+
+Iteration 1: Current knowledge: {'B', 'pair(B,Na)', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'Nb', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB'}
+Adding pair term: pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+Adding split terms: Na pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))
+
+Iteration 2: Current knowledge: {'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'pair(B,Na)', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'Nb', 'K_AS', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 3: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 4: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 5: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 6: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 7: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 8: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 9: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 10: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 11: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 12: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 13: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 14: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 15: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 16: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 17: Current knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding encryption term: enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)
+Adding encryption term: enc(Nb,K_AB)
+
+Final derived knowledge: {'pair(B,Na)', 'K_AS', 'pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS))))', 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))', 'B', 'enc(pair(Na,pair(K_AB,pair(B,enc(pair(K_AB,A),K_BS)))),K_AS)', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'pair(B,enc(pair(K_AB,A),K_BS))', 'Nb'}
+Adding knowledge to Alice's knowledge base: Nb-1
+Adding knowledge to Alice's knowledge base: enc(Nb-1,K_AB)
+Adding knowledge to Attacker's knowledge base: enc(Nb-1,K_AB)
+
+Attacker intercepts: enc(Nb-1,K_AB)
+MESSAGE: Alice -> Bob (intercepted by Attacker): {Nb-1}K_AB
+
+--- First protocol run complete, attacker has collected messages ---
+
+Starting the replay attack...
+Adding knowledge to Attacker's knowledge base: K_AB
+
+Attacker has the compromised session key: K_AB
+
+Attacker starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'K_AB'}
+Adding pair term: pair(K_AB,A)
+Adding split terms: A pair(B,Na)
+Adding decrypted message: Nb-1
+Adding decrypted message: Nb
+
+Iteration 1: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+Adding split terms: B Na
+
+Iteration 2: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 3: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 4: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 5: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 6: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 7: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 8: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 9: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 10: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 11: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 12: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 13: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 14: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 15: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Final derived knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Na', 'K_AB'}
+
+Attacker has learned both nonces: Na and Nb
+Adding knowledge to Bob's knowledge base: A
+Adding knowledge to Bob's knowledge base: B
+Adding knowledge to Bob's knowledge base: S
+Adding knowledge to Bob's knowledge base: K_BS
+Adding knowledge to Bob's knowledge base: enc(pair(K_AB,A),K_BS)
+
+Attacker replays old ticket to Bob: enc(pair(K_AB,A),K_BS)
+MESSAGE: Attacker -> Bob (impersonating Alice): {K_AB, A}K_BS
+
+Bob starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'S', 'A', 'enc(pair(K_AB,A),K_BS)', 'K_BS'}
+Adding decrypted message: pair(K_AB,A)
+
+Iteration 1: Current knowledge: {'B', 'S', 'A', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding split terms: K_AB A
+
+Iteration 2: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Iteration 3: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Iteration 4: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Iteration 5: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Iteration 6: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Iteration 7: Current knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+
+Final derived knowledge: {'B', 'S', 'A', 'K_AB', 'enc(pair(K_AB,A),K_BS)', 'K_BS', 'pair(K_AB,A)'}
+Adding knowledge to Bob's knowledge base: K_AB
+Adding knowledge to Bob's knowledge base: Nb'
+Adding knowledge to Bob's knowledge base: enc(Nb',K_AB)
+Adding knowledge to Attacker's knowledge base: enc(Nb',K_AB)
+
+Bob sends to Attacker (thinking it's Alice): enc(Nb',K_AB)
+MESSAGE: Bob -> Attacker (believing it's Alice): {Nb'}K_AB
+
+Attacker starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'K_AB'}
+Adding pair term: pair(K_AB,A)
+Adding split terms: A pair(B,Na)
+Adding decrypted message: Nb-1
+Adding decrypted message: Nb'
+Adding decrypted message: Nb
+
+Iteration 1: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "Nb'", 'I', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding split terms: B Na
+
+Iteration 2: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "Nb'", 'I', 'Na', 'K_AB'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+
+Iteration 3: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 4: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 5: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 6: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 7: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 8: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 9: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 10: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 11: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 12: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 13: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 14: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 15: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 16: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 17: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Final derived knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding knowledge to Attacker's knowledge base: Nb'-1
+Adding knowledge to Attacker's knowledge base: enc(Nb'-1,K_AB)
+Adding knowledge to Bob's knowledge base: enc(Nb'-1,K_AB)
+
+Attacker sends to Bob: enc(Nb'-1,K_AB)
+MESSAGE: Attacker -> Bob (impersonating Alice): {Nb'-1}K_AB
+
+Bob starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', "enc(Nb',K_AB)", 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS'}
+Adding pair term: pair(K_AB,A)
+Adding encryption term: enc(Nb',K_AB)
+Adding decrypted message: Nb'-1
+Adding decrypted message: pair(K_AB,A)
+
+Iteration 1: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Iteration 2: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Iteration 3: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Iteration 4: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Iteration 5: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Iteration 6: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Iteration 7: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Iteration 8: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Iteration 9: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Iteration 10: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Iteration 11: Current knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+Adding encryption term: enc(pair(K_AB,A),K_BS)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+
+Final derived knowledge: {'B', "enc(Nb',K_AB)", 'pair(K_AB,A)', 'S', 'A', 'K_AB', "Nb'", "enc(Nb'-1,K_AB)", 'enc(pair(K_AB,A),K_BS)', 'K_BS', "Nb'-1"}
+
+Attacker starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "enc(Nb'-1,K_AB)", 'I', 'K_AB', "Nb'-1"}
+Adding pair term: pair(K_AB,A)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding split terms: A pair(B,Na)
+Adding decrypted message: Nb-1
+Adding decrypted message: Nb'
+Adding decrypted message: Nb
+
+Iteration 1: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "enc(Nb'-1,K_AB)", "Nb'", 'I', 'K_AB', "Nb'-1"}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding split terms: B Na
+
+Iteration 2: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 3: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 4: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 5: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 6: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 7: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 8: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 9: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 10: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 11: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 12: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 13: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 14: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 15: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 16: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 17: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 18: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 19: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Final derived knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+
+Attacker starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "enc(Nb'-1,K_AB)", 'I', 'K_AB', "Nb'-1"}
+Adding pair term: pair(K_AB,A)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding split terms: A pair(B,Na)
+Adding decrypted message: Nb-1
+Adding decrypted message: Nb'
+Adding decrypted message: Nb
+
+Iteration 1: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "enc(Nb'-1,K_AB)", "Nb'", 'I', 'K_AB', "Nb'-1"}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding split terms: B Na
+
+Iteration 2: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 3: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 4: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 5: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 6: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 7: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 8: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 9: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 10: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 11: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 12: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 13: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 14: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 15: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 16: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 17: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 18: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 19: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Final derived knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+
+Attacker starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "enc(Nb'-1,K_AB)", 'I', 'K_AB', "Nb'-1"}
+Adding pair term: pair(K_AB,A)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding split terms: A pair(B,Na)
+Adding decrypted message: Nb-1
+Adding decrypted message: Nb'
+Adding decrypted message: Nb
+
+Iteration 1: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "enc(Nb'-1,K_AB)", "Nb'", 'I', 'K_AB', "Nb'-1"}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding split terms: B Na
+
+Iteration 2: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 3: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 4: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 5: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 6: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 7: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 8: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 9: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 10: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 11: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 12: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 13: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 14: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 15: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 16: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 17: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 18: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 19: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Final derived knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+
+Attacker starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "enc(Nb'-1,K_AB)", 'I', 'K_AB', "Nb'-1"}
+Adding pair term: pair(K_AB,A)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding split terms: A pair(B,Na)
+Adding decrypted message: Nb-1
+Adding decrypted message: Nb'
+Adding decrypted message: Nb
+
+Iteration 1: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "enc(Nb'-1,K_AB)", "Nb'", 'I', 'K_AB', "Nb'-1"}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding split terms: B Na
+
+Iteration 2: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 3: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 4: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 5: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 6: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 7: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 8: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 9: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 10: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 11: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 12: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 13: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 14: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 15: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 16: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 17: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 18: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 19: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Final derived knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+
+Attacker starts knowledge derivation...
+Initializing knowledge derivation...
+Computing subterms...
+
+Iteration 0: Current knowledge: {'B', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "enc(Nb'-1,K_AB)", 'I', 'K_AB', "Nb'-1"}
+Adding pair term: pair(K_AB,A)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding split terms: A pair(B,Na)
+Adding decrypted message: Nb-1
+Adding decrypted message: Nb'
+Adding decrypted message: Nb
+
+Iteration 1: Current knowledge: {'B', 'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'enc(pair(K_AB,A),K_BS)', 'Nb-1', 'pair(K_AB,A)', 'Nb', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', "enc(Nb'-1,K_AB)", "Nb'", 'I', 'K_AB', "Nb'-1"}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding split terms: B Na
+
+Iteration 2: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 3: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 4: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 5: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 6: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 7: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 8: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 9: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 10: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 11: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 12: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 13: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 14: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 15: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 16: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 17: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 18: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Iteration 19: Current knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+Adding encryption term: enc(Nb-1,K_AB)
+Adding encryption term: enc(Nb',K_AB)
+Adding encryption term: enc(Nb'-1,K_AB)
+Adding encryption term: enc(Nb,K_AB)
+
+Final derived knowledge: {'pair(B,Na)', 'enc(Nb-1,K_AB)', "enc(Nb',K_AB)", 'Nb-1', "enc(Nb'-1,K_AB)", "Nb'", 'enc(pair(K_AB,A),K_BS)', 'Na', 'K_AB', "Nb'-1", 'B', 'pair(K_AB,A)', 'S', 'A', 'pair(A,pair(B,Na))', 'enc(Nb,K_AB)', 'I', 'Nb'}
+
+Security Analysis:
+Attack successful: True
+Bob believes he is talking to Alice
+Secrets known to Attacker: {'Na', 'Nb', 'K_AB', "Nb'"}
+
+The protocol is not secure! The adversary has violated the property of the protocol.
